@@ -73,4 +73,23 @@ For proxying a request there are only two conditions:
 - The request contains a valid **Auth Token** as Bearer authentication in the `Authorization` header.
 - The request contains a valid URL for the proxy target in the `Destination` header.[^1] 
 
+Example in cURL:
+```
+curl -v --header "Destination: https://my-target-url.com" \ 
+        --header "Authorization: Bearer 0001HjFxeeGd1m8I6fs44LbC98Fz" \
+        localhost:3128/example/path
+```
+
+Output example:
+``` 
+Introspection Proxy listening on port 8080
+=== Received request with destination to: [https://my-target-url.com] ===
++ Access Token: [0001HjFxeeGd1m8I6fs44LbC98Fz]
++ Introspection Response: [{
+  "sub": "dacamposol",
+  "active": true
+}]
++ Proxying to: [https://my-target-url.com/example/path]
+```
+
 [^1]: I'm not totally convinced with this header name, so inputs about possible names are appreciated.
