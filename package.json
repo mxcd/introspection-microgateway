@@ -1,0 +1,22 @@
+{
+  "name": "introspection-microgateway",
+  "version": "1.0.0",
+  "description": "Introspection gateway to enhance Web Proxy servers",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "pretest": "eslint --ignore-path .gitignore .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Campos Olivares",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "http-proxy": "^1.18.1",
+    "node-fetch": "^3.0.0",
+    "valid-url": "^1.0.9"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
+}
