@@ -53,4 +53,4 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ github.event.repo.name }}:latest, ${{ github.event.repo.name }}:${{ github.event.release.tag_name }}
+          tags: ${{ github.repository }}:latest, ${{ github.repository }}:${{ github.event.release.tag_name }}
