@@ -37,7 +37,6 @@ jobs:
     name: Docker Build and Push
     runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published'
-    needs: [build]
     steps:
       - uses: actions/checkout@master
       - name: Set up QEMU
