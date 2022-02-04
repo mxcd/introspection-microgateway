@@ -4,10 +4,21 @@ import Console from 'node:console';
 import fetch from 'node-fetch';
 import validUrl from 'valid-url';
 import httpProxy from 'http-proxy';
+import pkg from 'jsonwebtoken';
+const {sign} = pkg;
 
 dotenv.config();
 
 const proxy = httpProxy.createProxyServer({});
+
+const JWT_HEADER_NAME = process.env.JWT_HEADER_NAME;
+const ALLOW_JWT_PASSTHROUGH = process.env.ALLOW_JWT_PASSTHROUGH === 'true';
+const JWT_SECRET = process.env.JWT_SECRET || 'secret';
+const SSL_SECURE = process.env.SSL_SECURE === 'true';
+const PORT = process.env.PORT || 8080;
+
+Console.log(`Using JWT header name: ${JWT_HEADER_NAME}`);
+Console.log(ALLOW_JWT_PASSTHROUGH ? 'JWT passthrough enabled' : 'JWT passthrough disabled');
 
 http
   .createServer(async (req, res) => {
@@ -86,9 +97,24 @@ http
     // Validate the Token Introspection
     if (responseData.active) {
       Console.log(`+ Proxying to: [${destinationHeader + req.url}]`);
+
+      if(JWT_HEADER_NAME) {
+        const setHeader = () => {
+          req.headers[JWT_HEADER_NAME] = sign({
+            data: responseData
+          }, JWT_SECRET, { expiresIn: '1h' });
+        };
+
+        if(typeof(req.headers[JWT_HEADER_NAME]) === 'undefined') {
+          setHeader();
+        } else if(!ALLOW_JWT_PASSTHROUGH) {
+          setHeader();
+        }
+      }
+
       proxy.web(req, res, {
         target: destinationHeader,
-        secure: process.env.SSL_SECURE ? process.env.SSL_SECURE : true,
+        secure: SSL_SECURE,
       });
     } else {
       Console.error(`- The access token [${accessToken}] is not valid`);
@@ -98,9 +124,9 @@ http
       res.end('Access Token is invalid');
     }
   })
-  .listen(8080, (err) => {
+  .listen(PORT, (err) => {
     if (err) Console.error('Error starting HTTP server', err);
-    else Console.log('Introspection Proxy listening on port 8080');
+    else Console.log(`Introspection Proxy listening on port ${PORT}`);
   });
 
 process.on('unhandledRejection', (err) => {
