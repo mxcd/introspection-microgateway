@@ -1,5 +1,5 @@
 # Docker build and push workflow
-# Requires Organization secrets:
+# Requires Organization/Repo secrets:
 # - DOCKERHUB_USERNAME
 # - DOCKERHUB_TOKEN (retrieve here: https://hub.docker.com/settings/security)
 # It is assumed, that your GH Organization name is the same as your Dockerhub organization name.
@@ -53,4 +53,4 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${GITHUB_REPOSITORY}:latest, ${GITHUB_REPOSITORY}:${{ github.event.release.tag_name }}
+          tags: ${{ github.event.repo.name }}:latest, ${{ github.event.repo.name }}:${{ github.event.release.tag_name }}
