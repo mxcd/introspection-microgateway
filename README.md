@@ -37,17 +37,18 @@ SSO_CLIENT_SECRET={{ secret "introspection_secret" }}
 ```
 
 ### All environment varialbes
-| variable name         | required | default    | description                                                                                                                                          |
-|-----------------------|----------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| SSO_INTROSPECTION     | true     | -          | Token introspection endpoint (can be found on the `${SSO}/.well-known/openid-configuration` page                                                     |
-| SSO_CLIENT_ID         | true     | -          | Client ID of your OpenID Connect configuration                                                                                                       |
-| SSO_CLIENT_SECRET     | true     | -          | Client Secret of your OpenID Connect configuration                                                                                                   |
-| PORT                  | false    | `8080`     | Port on which the proxy server shall listen for incoming requests                                                                                    |
-| SSL_SECURE            | false    | `true`     | Proxy checks SSL certificates (see [here](https://github.com/http-party/node-http-proxy#using-https))                                                |
-| JWT_HEADER_NAME       | false    | -          | If set, the introspection result will be injected as JWT in the given header                                                                         |
-| ALLOW_JWT_PASSTHROUGH | false    | `false`    | If `true`, it is allowed to call the proxy with the JWT_HEADER_NAME already set. This prevents it from being overwritten by the introspection result |
-| JWT_SECRET            | false    | `'secret'` | The secret used to sign the JWT                                                                                                                      |
-|                       |          |            |                                                                                                                                                      |
+| variable name             | required | default    | description                                                                                                                                          |
+|---------------------------|----------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| SSO_INTROSPECTION         | true     | -          | Token introspection endpoint (can be found on the `${SSO}/.well-known/openid-configuration` page                                                     |
+| SSO_CLIENT_ID             | true     | -          | Client ID of your OpenID Connect configuration                                                                                                       |
+| SSO_CLIENT_SECRET         | true     | -          | Client Secret of your OpenID Connect configuration                                                                                                   |
+| PORT                      | false    | `8080`     | Port on which the proxy server shall listen for incoming requests                                                                                    |
+| SSL_SECURE                | false    | `true`     | Proxy checks SSL certificates (see [here](https://github.com/http-party/node-http-proxy#using-https))                                                |
+| JWT_HEADER_NAME           | false    | -          | If set, the introspection result will be injected as JWT in the given header                                                                         |
+| ALLOW_JWT_PASSTHROUGH     | false    | `false`    | If `true`, it is allowed to call the proxy with the JWT_HEADER_NAME already set. This prevents it from being overwritten by the introspection result |
+| JWT_SECRET                | false    | `'secret'` | The secret used to sign the JWT                                                                                                                      |
+| ALLOW_MISSING_AUTH_HEADER | false    | `false`    | *WARNING*: only set to `true` if you want to allow unauthorized access to your backend! Set to `true` to ignore the abscense of an `Authorization` header and simply forward the request |
+| LOG_LEVEL                 | false    | `'info'`   | Available levels are `'debug'`, `'info'`, `'warn'`, `'error'`                                                                                        |
 
 ### docker-compose.yml
 ```
