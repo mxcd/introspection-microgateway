@@ -165,9 +165,7 @@ http
       if(JWT_HEADER_NAME) {
         const setHeader = () => {
           log.debug(`Setting JWT header '${JWT_HEADER_NAME}'`);
-          req.headers[JWT_HEADER_NAME] = sign({
-            data: responseData
-          }, JWT_SECRET, { expiresIn: '1h' });
+          req.headers[JWT_HEADER_NAME] = sign(responseData, JWT_SECRET, { expiresIn: '1h' });
         };
 
         if(typeof(req.headers[JWT_HEADER_NAME]) === 'undefined') {
