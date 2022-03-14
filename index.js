@@ -167,7 +167,7 @@ http
           log.debug(`Setting JWT header '${JWT_HEADER_NAME}'`);
           if(responseData.exp) delete responseData.exp;
           if(responseData.iat) delete responseData.iat;
-          req.headers[JWT_HEADER_NAME] = sign(responseData, JWT_SECRET, { expiresIn: '1h' });
+          req.headers[JWT_HEADER_NAME] = sign(responseData, JWT_SECRET);
         };
 
         if(typeof(req.headers[JWT_HEADER_NAME]) === 'undefined') {
