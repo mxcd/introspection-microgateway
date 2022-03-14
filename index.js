@@ -165,8 +165,6 @@ http
       if(JWT_HEADER_NAME) {
         const setHeader = () => {
           log.debug(`Setting JWT header '${JWT_HEADER_NAME}'`);
-          if(responseData.exp) delete responseData.exp;
-          if(responseData.iat) delete responseData.iat;
           req.headers[JWT_HEADER_NAME] = sign(responseData, JWT_SECRET);
         };
 
